@@ -1,0 +1,1175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IntakeHive — Nationwide Mass Tort Claim Reviews</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#06111E;--navy2:#0A1929;--navy3:#0E2035;
+  --gold:#B8962E;--gold2:#D4AE52;
+  --gcta:#B22222;--gcta2:#CC2E2E;
+  --cream:#F2EFE9;--slate:#8C9FB8;--white:#fff;
+  --red:#C41230;--green:#22A355;
+  --border:rgba(184,150,46,.15);--border-gold:rgba(184,150,46,.15);--radius:4px;
+  --shadow:0 8px 48px rgba(0,0,0,.75);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--cream);line-height:1.6;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");opacity:.025}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:16px 5%;background:rgba(7,17,31,.95);backdrop-filter:blur(14px);border-bottom:1px solid var(--border-gold)}
+.nav-brand{display:flex;align-items:center;gap:12px}
+.nav-logo{width:38px;height:38px;background:linear-gradient(135deg,var(--gcta),var(--gcta2));border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:900;font-size:.85rem;color:var(--white)}
+.nav-title{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--white)}
+.nav-sub{font-size:.7rem;color:var(--slate)}
+.nav-badge{font-family:'DM Mono',monospace;font-size:.6rem;color:var(--green);background:rgba(34,163,85,.1);border:1px solid rgba(34,163,85,.3);padding:3px 10px;border-radius:20px;letter-spacing:.05em;text-transform:uppercase;display:flex;align-items:center;gap:6px}
+.nav-badge::before{content:'';width:6px;height:6px;background:var(--green);border-radius:50%;animation:pulse 1.8s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.8)}}
+.nav-cta{background:linear-gradient(135deg,var(--gcta),var(--gcta2));color:var(--white);font-weight:700;font-size:.8rem;padding:10px 20px;border-radius:var(--radius);text-decoration:none;letter-spacing:.02em;transition:opacity .2s,transform .2s}
+.nav-cta:hover{opacity:.88;transform:translateY(-1px)}
+.nav-call{display:flex;align-items:center;gap:7px;background:transparent;border:1.5px solid var(--gold);color:var(--gold);font-weight:700;font-size:.8rem;padding:9px 18px;border-radius:var(--radius);text-decoration:none;letter-spacing:.02em;transition:background .2s,color .2s,transform .2s;white-space:nowrap}
+.nav-call:hover{background:var(--gold);color:var(--navy);transform:translateY(-1px)}
+.nav-call svg{width:14px;height:14px;flex-shrink:0}
+
+/* HERO */
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;padding:110px 5% 80px;overflow:hidden}
+.hero-bg{position:absolute;inset:0;z-index:-1;
+  background:
+    linear-gradient(135deg,rgba(9,15,28,.93) 0%,rgba(9,15,28,.75) 55%,rgba(9,15,28,.88) 100%),
+    url('https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat}
+.hero-lines{position:absolute;inset:0;z-index:-1;pointer-events:none;background-image:linear-gradient(rgba(201,168,76,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(201,168,76,.03) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black,transparent)}
+.hero-inner{max-width:1200px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;font-family:'DM Mono',monospace;font-size:.68rem;color:var(--gold);letter-spacing:.12em;text-transform:uppercase;margin-bottom:20px;background:rgba(201,168,76,.08);border:1px solid var(--border);padding:6px 14px;border-radius:20px}
+.hero-h1{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,4vw,3.5rem);font-weight:900;line-height:1.1;color:var(--white);margin-bottom:16px}
+.hero-h1 em{font-style:normal;background:linear-gradient(135deg,var(--gold),var(--gold2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:1rem;color:var(--slate);margin-bottom:28px;line-height:1.75;max-width:480px}
+.hero-pills{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px}
+.pill{display:flex;align-items:center;gap:7px;font-size:.78rem;color:var(--cream);background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);padding:7px 14px;border-radius:20px}
+.btn-hero{display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg,var(--gcta),var(--gcta2));color:var(--white);font-weight:700;font-size:.95rem;padding:15px 32px;border-radius:var(--radius);text-decoration:none;cursor:pointer;border:none;box-shadow:0 4px 24px rgba(26,122,69,.45);transition:transform .2s,box-shadow .2s;letter-spacing:.01em}
+.btn-hero:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(26,122,69,.6)}
+.hero-note{font-size:.75rem;color:var(--slate);margin-top:12px}
+
+/* hero stat card */
+.hero-card{background:var(--navy2);border:1px solid var(--border);border-radius:8px;padding:30px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.hero-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gcta),transparent)}
+.stat-row{display:grid;grid-template-columns:1fr 1px 1fr;gap:20px;margin-bottom:24px}
+.stat{text-align:center}
+.stat-num{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:900;color:var(--gold);line-height:1}
+.stat-label{font-size:.68rem;color:var(--slate);text-transform:uppercase;letter-spacing:.08em;margin-top:4px}
+.stat-div{background:var(--border);align-self:stretch}
+.rate-bar{margin-bottom:16px}
+.rate-label{display:flex;justify-content:space-between;font-size:.78rem;color:var(--slate);margin-bottom:6px}
+.rate-label span:last-child{color:var(--green);font-weight:600}
+.bar{height:5px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden}
+.bar-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--gcta),var(--gcta2));animation:barGrow 1.5s ease-out .5s both;transform-origin:left}@keyframes barGrow{from{width:0!important}}
+
+/* SHARED SECTION */
+section{position:relative;padding:88px 5%}
+.section-inner{max-width:1200px;margin:0 auto}
+.section-tag{font-family:'DM Mono',monospace;font-size:.66rem;color:var(--gold);letter-spacing:.15em;text-transform:uppercase;margin-bottom:14px;display:block}
+.section-title{font-family:'Playfair Display',serif;font-size:clamp(1.7rem,2.8vw,2.4rem);font-weight:800;color:var(--white);margin-bottom:14px;line-height:1.2}
+.section-desc{font-size:.95rem;color:var(--slate);max-width:560px;line-height:1.8}
+.divider{height:1px;background:var(--border);margin:0 5%}
+
+/* TORT CARDS GRID */
+.torts{background:var(--navy2)}
+.torts-intro{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:end;margin-bottom:52px}
+.tort-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.tort-card{background:var(--navy3);border:1px solid var(--border);border-radius:6px;padding:0;cursor:pointer;transition:border-color .3s,transform .3s,box-shadow .3s;position:relative;overflow:hidden;text-decoration:none;display:block}
+.tort-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gcta),var(--gcta2));transform:scaleX(0);transform-origin:left;transition:transform .3s}
+.tort-card:hover{border-color:rgba(33,150,79,.5);transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,.5)}
+.tort-card:hover::after{transform:scaleX(1)}
+.tort-card-img{position:relative;height:168px;overflow:hidden;border-radius:6px 6px 0 0}
+.tort-card-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease;filter:brightness(.82)}
+.tort-card:hover .tort-card-img img{transform:scale(1.07);filter:brightness(.9)}
+.tort-card-body{padding:22px 22px 20px}
+.tort-icon{font-size:1.6rem;margin-bottom:14px;display:block}
+.tort-category{font-family:'DM Mono',monospace;font-size:.6rem;color:var(--gold);letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px}
+.tort-name{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--white);margin-bottom:8px}
+.tort-desc{font-size:.8rem;color:var(--slate);line-height:1.65;margin-bottom:14px}
+.tort-link{font-size:.75rem;color:var(--gcta2);font-weight:600;display:flex;align-items:center;gap:5px}
+.tort-badge{display:inline-block;font-size:.58rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:3px 10px;border-radius:10px;background:rgba(34,163,85,.18);color:var(--green);border:1px solid rgba(34,163,85,.35);position:absolute;top:12px;left:12px;z-index:2}
+
+/* HOW IT WORKS */
+.steps{background:var(--navy)}
+.steps-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin-top:48px;position:relative}
+.steps-grid::before{content:'';position:absolute;top:28px;left:10%;right:10%;height:1px;background:var(--border);z-index:0}
+.step{text-align:center;position:relative;z-index:1}
+.step-circle{width:56px;height:56px;border-radius:50%;background:var(--navy2);border:2px solid var(--gcta);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-family:'Playfair Display',serif;font-weight:900;font-size:1rem;color:var(--gcta)}
+.step-title{font-size:.82rem;font-weight:600;color:var(--white);margin-bottom:6px}
+.step-desc{font-size:.73rem;color:var(--slate);line-height:1.6;padding:0 8px}
+
+/* INDIVIDUAL TORT FORM SECTIONS */
+.tort-form-section{background:var(--navy);border-top:1px solid var(--border);padding:0}
+.tort-tab-nav{background:var(--navy2);border-bottom:1px solid var(--border);overflow-x:auto;white-space:nowrap;position:sticky;top:68px;z-index:90}
+.tort-tab-inner{max-width:1200px;margin:0 auto;display:flex;padding:0 5%}
+.tort-tab{display:inline-flex;align-items:center;gap:8px;padding:16px 20px;font-size:.8rem;font-weight:600;color:var(--slate);cursor:pointer;border-bottom:2px solid transparent;transition:color .2s,border-color .2s;white-space:nowrap;background:none;border-left:none;border-right:none;border-top:none;font-family:'DM Sans',sans-serif}
+.tort-tab:hover{color:var(--cream)}
+.tort-tab.active{color:var(--gcta2);border-bottom-color:var(--gcta2)}
+.tort-tab .tab-dot{width:7px;height:7px;border-radius:50%;background:var(--green)}
+
+/* Form panels */
+.tort-panel{display:none;padding:72px 5%}
+.tort-panel.active{display:block}
+.tort-panel-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1.5fr;gap:64px;align-items:start}
+.tort-panel-info h2{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,2.5vw,2.2rem);font-weight:900;color:var(--white);margin-bottom:16px;line-height:1.2}
+.tort-panel-info h2 em{font-style:normal;background:linear-gradient(135deg,var(--gold),var(--gold2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.tort-panel-info p{font-size:.88rem;color:var(--slate);line-height:1.8;margin-bottom:20px}
+.qualify-list{list-style:none;margin-bottom:24px}
+.qualify-list li{display:flex;align-items:flex-start;gap:10px;font-size:.84rem;color:var(--cream);padding:8px 0;border-bottom:1px solid rgba(255,255,255,.05)}
+.qualify-list li:last-child{border:none}
+.q-check{width:18px;height:18px;flex-shrink:0;margin-top:2px;border-radius:50%;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.3);display:flex;align-items:center;justify-content:center;font-size:.6rem;color:var(--gold)}
+.tort-awards{background:var(--navy2);border:1px solid var(--border);border-radius:6px;padding:20px;margin-top:20px}
+.tort-awards h4{font-size:.72rem;font-family:'DM Mono',monospace;color:var(--gold);letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px}
+.award-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:.78rem}
+.award-row:last-child{border:none}
+.award-amt{color:var(--green);font-weight:700;font-size:.82rem}
+
+/* FORM CARD */
+.form-card{background:var(--navy2);border:1px solid var(--border);border-radius:8px;padding:40px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.form-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gcta),var(--gcta2),var(--gcta))}
+.form-head{margin-bottom:24px;padding-bottom:18px;border-bottom:1px solid var(--border-gold)}
+.form-head h3{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--white)}
+.form-head p{font-size:.78rem;color:var(--slate);margin-top:4px}
+.step-header{display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border-gold)}
+.step-num{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--gcta),var(--gcta2));color:var(--white);font-weight:800;font-size:.75rem;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.step-lbl{font-family:'Playfair Display',serif;font-weight:700;font-size:.92rem;color:var(--white)}
+.form-group{margin-bottom:18px}
+.form-group label{display:block;font-size:.72rem;font-weight:600;color:var(--slate);text-transform:uppercase;letter-spacing:.08em;margin-bottom:7px}
+.form-group label span{color:var(--gold)}
+.form-control{width:100%;padding:12px 15px;background:var(--navy3);border:1px solid rgba(138,153,181,.25);border-radius:var(--radius);color:var(--white);font-family:'DM Sans',sans-serif;font-size:.88rem;transition:border-color .2s,box-shadow .2s;appearance:none}
+.form-control::placeholder{color:rgba(138,153,181,.5)}
+.form-control:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,168,76,.12)}
+.form-control.error{border-color:var(--red)}
+select.form-control{cursor:pointer}
+select.form-control option{background:var(--navy2)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form-sep{height:1px;background:var(--border);margin:22px 0}
+.field-error{font-size:.7rem;color:var(--red);margin-top:4px;display:none}
+.consent-block{margin:22px 0 20px}
+.consent-check{display:flex;align-items:flex-start;gap:11px;margin-bottom:12px;cursor:pointer}
+.consent-check input[type="checkbox"]{appearance:none;width:17px;height:17px;flex-shrink:0;margin-top:2px;background:var(--navy3);border:1px solid rgba(138,153,181,.4);border-radius:3px;cursor:pointer;position:relative;transition:background .2s,border-color .2s}
+.consent-check input[type="checkbox"]:checked{background:var(--gold);border-color:var(--gold)}
+.consent-check input[type="checkbox"]:checked::after{content:'✓';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--navy);font-size:.65rem;font-weight:800}
+.consent-check p{font-size:.74rem;color:var(--slate);line-height:1.6}
+.consent-check p a{color:var(--gold);text-decoration:none}
+.btn-submit{width:100%;padding:16px;background:linear-gradient(135deg,var(--gcta),var(--gcta2));color:var(--white);font-family:'DM Sans',sans-serif;font-weight:700;font-size:.95rem;letter-spacing:.02em;border:none;border-radius:var(--radius);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 4px 20px rgba(26,122,69,.4);transition:transform .2s,box-shadow .2s,opacity .2s}
+.btn-submit:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(26,122,69,.55)}
+.btn-submit:disabled{opacity:.6;cursor:not-allowed;transform:none}
+.secure-note{display:flex;align-items:center;justify-content:center;gap:6px;font-size:.7rem;color:var(--slate);margin-top:12px}
+.spinner{width:16px;height:16px;border:2px solid transparent;border-top-color:var(--navy);border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.form-success{display:none;text-align:center;padding:48px 20px}
+.success-icon{width:68px;height:68px;border-radius:50%;background:rgba(40,169,106,.12);border:2px solid rgba(40,169,106,.4);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:1.8rem;color:var(--green)}
+.form-success h3{font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--white);margin-bottom:10px}
+.form-success p{font-size:.88rem;color:var(--slate);line-height:1.75}
+
+/* WHY US */
+.why{background:var(--navy2)}
+.why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:48px}
+.why-card{background:var(--navy3);border:1px solid var(--border);border-radius:6px;padding:28px;transition:border-color .3s,transform .3s}
+.why-card:hover{border-color:var(--gold);transform:translateY(-3px)}
+.why-icon{font-size:1.5rem;margin-bottom:14px}
+.why-title{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--white);margin-bottom:8px}
+.why-desc{font-size:.82rem;color:var(--slate);line-height:1.7}
+
+/* FAQ */
+.faq{background:var(--navy)}
+.faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:48px}
+.faq-item{background:var(--navy2);border:1px solid var(--border);border-radius:6px;padding:24px;cursor:pointer;transition:border-color .3s}
+.faq-item:hover{border-color:rgba(201,168,76,.4)}
+.faq-q{display:flex;align-items:center;justify-content:space-between;gap:14px;font-family:'Playfair Display',serif;font-size:.92rem;font-weight:700;color:var(--white)}
+.faq-icon{color:var(--gold);flex-shrink:0;transition:transform .3s;font-size:1.1rem}
+.faq-a{font-size:.83rem;color:var(--slate);line-height:1.75;max-height:0;overflow:hidden;transition:max-height .4s ease,margin-top .3s}
+.faq-item.open .faq-a{max-height:300px;margin-top:12px}
+.faq-item.open .faq-icon{transform:rotate(45deg)}
+
+/* FOOTER */
+footer{background:#050a14;border-top:1px solid var(--border);padding:44px 5% 28px}
+.footer-inner{max-width:1200px;margin:0 auto}
+.footer-top{display:grid;grid-template-columns:auto 1fr auto;gap:40px;align-items:start;margin-bottom:28px}
+.footer-brand{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.footer-brand .nav-logo{width:34px;height:34px;font-size:.78rem}
+.footer-brand span{font-family:'Playfair Display',serif;font-size:.95rem;font-weight:700;color:var(--white)}
+.footer-tagline{font-size:.75rem;color:var(--slate);line-height:1.7;max-width:280px}
+.footer-links h4{font-size:.7rem;font-family:'DM Mono',monospace;color:var(--gold);letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px}
+.footer-links ul{list-style:none}
+.footer-links li{margin-bottom:7px}
+.footer-links a{font-size:.8rem;color:var(--slate);text-decoration:none;transition:color .2s}
+.footer-links a:hover{color:var(--cream)}
+.footer-disclaimer{font-size:.72rem;color:var(--slate);line-height:1.8;border-top:1px solid var(--border);padding-top:20px}
+.footer-copy{font-size:.7rem;color:rgba(138,153,181,.45);margin-top:14px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+
+/* TOAST */
+#toast{position:fixed;bottom:24px;right:24px;z-index:999;background:var(--navy2);border:1px solid var(--border);border-radius:6px;padding:14px 20px;font-size:.84rem;color:var(--cream);box-shadow:0 8px 32px rgba(0,0,0,.6);transform:translateY(80px);opacity:0;transition:transform .4s cubic-bezier(.22,1,.36,1),opacity .4s;max-width:300px}
+#toast.show{transform:translateY(0);opacity:1}
+#toast.toast-error{border-color:rgba(201,76,76,.5)}
+#toast.toast-success{border-color:rgba(61,184,122,.5)}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .65s ease,transform .65s ease}
+.reveal.visible{opacity:1;transform:none}
+
+/* RESPONSIVE */
+@media(max-width:1024px){.tort-grid{grid-template-columns:repeat(2,1fr)}.steps-grid{grid-template-columns:repeat(3,1fr)}.steps-grid::before{display:none}.footer-top{grid-template-columns:1fr 1fr}}
+@media(max-width:800px){.hero-inner{grid-template-columns:1fr;gap:40px}.hero-card{order:-1}.tort-panel-inner{grid-template-columns:1fr;gap:36px}.why-grid{grid-template-columns:1fr 1fr}.faq-grid{grid-template-columns:1fr}.torts-intro{grid-template-columns:1fr}}
+@media(max-width:600px){nav{padding:13px 5%}.nav-cta{display:none}.nav-call{display:none}.tort-grid{grid-template-columns:1fr}.why-grid{grid-template-columns:1fr}.form-row{grid-template-columns:1fr}.form-card{padding:24px 18px}.steps-grid{grid-template-columns:1fr 1fr}.hero-inner{gap:28px}.footer-top{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">
+    <div class="nav-logo">IH</div>
+    <div>
+      <div class="nav-title">IntakeHive</div>
+      <div class="nav-sub">intakehive.com</div>
+    </div>
+  </div>
+  <div class="nav-badge">Real-time processing active</div>
+  <div style="display:flex;align-items:center;gap:10px">
+    <a href="tel:+18664849403" class="nav-call">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      (866) 484-9403
+    </a>
+    <a href="#torts" class="nav-cta">Get Free Review →</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-lines"></div>
+  <div class="hero-inner">
+    <div>
+      <div class="hero-tag">⚖️ Nationwide Mass Tort Claim Reviews</div>
+      <h1 class="hero-h1">Powerful Legal Advocacy.<br><em>Your Journey<br>Toward Justice.</em></h1>
+      <p class="hero-sub">If you or a loved one were harmed by a dangerous product, drug, chemical, or device — you may be entitled to significant compensation. Check eligibility in under 60 seconds.</p>
+      <div class="hero-pills">
+        <div class="pill">$ No Upfront Fees</div>
+        <div class="pill">🗺 All 50 States</div>
+        <div class="pill">⚡ Fast-Track Eligibility</div>
+        <div class="pill">🔒 SSL Secured</div>
+      </div>
+      <a href="#torts" class="btn-hero">Start Free Claim Review →</a>
+      <p class="hero-note">No obligation. We only get paid if you win.</p>
+    </div>
+    <div class="hero-card reveal">
+      <div class="stat-row">
+        <div class="stat"><div class="stat-num">6+</div><div class="stat-label">Active Campaigns</div></div>
+        <div class="stat-div"></div>
+        <div class="stat"><div class="stat-num">$0</div><div class="stat-label">Upfront Cost</div></div>
+      </div>
+      <div class="rate-bar"><div class="rate-label"><span>Nationwide Coverage</span><span>All 50 States</span></div><div class="bar"><div class="bar-fill" style="width:100%"></div></div></div>
+      <div class="rate-bar"><div class="rate-label"><span>Current Success Rate</span><span>High</span></div><div class="bar"><div class="bar-fill" style="width:88%"></div></div></div>
+      <div class="rate-bar"><div class="rate-label"><span>Avg. Response Time</span><span>24–48 hrs</span></div><div class="bar"><div class="bar-fill" style="width:60%"></div></div></div>
+      <a href="#torts" class="btn-hero" style="width:100%;justify-content:center;margin-top:8px;font-size:.85rem;">Browse Active Lawsuits →</a>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ACTIVE TORTS OVERVIEW -->
+<section class="torts" id="torts">
+  <div class="section-inner">
+    <div class="torts-intro">
+      <div>
+        <span class="section-tag reveal">Active Lawsuits & Litigation</span>
+        <h2 class="section-title reveal">Have you been harmed by a product, drug, device, or chemical?</h2>
+      </div>
+      <p class="section-desc reveal">Browse active mass tort campaigns below. Each has a dedicated eligibility form tailored to its specific criteria. Select a case type to check your eligibility — there are no fees unless you win, but time to file may be limited.</p>
+    </div>
+    <div class="tort-grid">
+
+      <a class="tort-card reveal" href="#form-section" onclick="switchTort('talcum')">
+        <div class="tort-card-img">
+          <img src="https://images.unsplash.com/photo-1583947215259-38e31be8751f?auto=format&fit=crop&w=600&q=75" alt="Talcum Powder Lawsuit" loading="lazy">
+          <div class="tort-badge">Active Lawsuit</div>
+        </div>
+        <div class="tort-card-body">
+          <div class="tort-category">Consumer Product</div>
+          <div class="tort-name">Talcum Powder</div>
+          <div class="tort-desc">Talcum powder, used in products like Johnson & Johnson Baby Powder, has been linked to ovarian cancer and mesothelioma due to asbestos contamination.</div>
+          <div class="tort-link">See If You Qualify →</div>
+        </div>
+      </a>
+
+      <a class="tort-card reveal" href="#form-section" onclick="switchTort('roundup')">
+        <div class="tort-card-img">
+          <img src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=600&q=75" alt="Roundup Lawsuit" loading="lazy">
+          <div class="tort-badge">Active Lawsuit</div>
+        </div>
+        <div class="tort-card-body">
+          <div class="tort-category">Consumer / Agriculture</div>
+          <div class="tort-name">Roundup (Glyphosate)</div>
+          <div class="tort-desc">Roundup weed killer by Monsanto/Bayer contains glyphosate, classified as a probable human carcinogen linked to non-Hodgkin's Lymphoma and other blood cancers.</div>
+          <div class="tort-link">See If You Qualify →</div>
+        </div>
+      </a>
+
+      <a class="tort-card reveal" href="#form-section" onclick="switchTort('paraquat')">
+        <div class="tort-card-img">
+          <img src="https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&w=600&q=75" alt="Paraquat Lawsuit" loading="lazy">
+          <div class="tort-badge">Active Lawsuit</div>
+        </div>
+        <div class="tort-card-body">
+          <div class="tort-category">Agricultural Chemical</div>
+          <div class="tort-name">Paraquat</div>
+          <div class="tort-desc">Paraquat is a highly toxic herbicide linked to Parkinson's disease. Even small amounts of exposure have been tied to severe, irreversible neurological conditions.</div>
+          <div class="tort-link">See If You Qualify →</div>
+        </div>
+      </a>
+
+      <a class="tort-card reveal" href="#form-section" onclick="switchTort('depo')">
+        <div class="tort-card-img">
+          <img src="https://images.unsplash.com/photo-1584820927498-cad0e523f251?auto=format&fit=crop&w=600&q=75" alt="Depo-Provera Lawsuit" loading="lazy">
+          <div class="tort-badge">Active Lawsuit</div>
+        </div>
+        <div class="tort-card-body">
+          <div class="tort-category">Drug / Medical Device</div>
+          <div class="tort-name">Depo-Provera</div>
+          <div class="tort-desc">Depo-Provera, a birth control shot by Pfizer, has been linked to meningioma (brain tumors), bone density loss, blood clots, and certain cancers.</div>
+          <div class="tort-link">See If You Qualify →</div>
+        </div>
+      </a>
+
+      <a class="tort-card reveal" href="#form-section" onclick="switchTort('hairrelaxer')">
+        <div class="tort-card-img">
+          <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=600&q=75" alt="Hair Relaxer Lawsuit" loading="lazy">
+          <div class="tort-badge">Active Lawsuit</div>
+        </div>
+        <div class="tort-card-body">
+          <div class="tort-category">Personal Care Product</div>
+          <div class="tort-name">Hair Relaxer</div>
+          <div class="tort-desc">Chemical hair relaxers have been linked to uterine cancer, ovarian cancer, and endometrial cancer in women who used these products regularly over time.</div>
+          <div class="tort-link">See If You Qualify →</div>
+        </div>
+      </a>
+
+      <a class="tort-card reveal" href="#form-section" onclick="switchTort('cgm')">
+        <div class="tort-card-img">
+          <img src="https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?auto=format&fit=crop&w=600&q=75" alt="CGM Device Lawsuit" loading="lazy">
+          <div class="tort-badge">Active Lawsuit</div>
+        </div>
+        <div class="tort-card-body">
+          <div class="tort-category">Medical Device</div>
+          <div class="tort-name">Continuous Glucose Monitor (CGM)</div>
+          <div class="tort-desc">Certain CGM devices have been linked to inaccurate readings causing dangerous insulin over- or under-dosing, leading to serious injury or death in diabetic patients.</div>
+          <div class="tort-link">See If You Qualify →</div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- HOW IT WORKS -->
+<section class="steps">
+  <div class="section-inner">
+    <span class="section-tag reveal">Your Journey to Justice</span>
+    <h2 class="section-title reveal">Start your claim review in 5 steps</h2>
+    <div class="steps-grid">
+      <div class="step reveal">
+        <div class="step-circle">01</div>
+        <div class="step-title">Select Your Case</div>
+        <div class="step-desc">Choose the lawsuit type that matches your exposure or diagnosis from our active campaigns above.</div>
+      </div>
+      <div class="step reveal">
+        <div class="step-circle">02</div>
+        <div class="step-title">Submit the Form</div>
+        <div class="step-desc">Complete the tailored eligibility form for your case type. It takes under 2 minutes.</div>
+      </div>
+      <div class="step reveal">
+        <div class="step-circle">03</div>
+        <div class="step-title">Share Your Story</div>
+        <div class="step-desc">Our team reviews your submission and contacts you within 24–48 hours to discuss your claim.</div>
+      </div>
+      <div class="step reveal">
+        <div class="step-circle">04</div>
+        <div class="step-title">Attorney Review</div>
+        <div class="step-desc">If you qualify, you'll be connected with an experienced attorney who will evaluate your case.</div>
+      </div>
+      <div class="step reveal">
+        <div class="step-circle">05</div>
+        <div class="step-title">Pursue Justice</div>
+        <div class="step-desc">Your legal team guides you through the process to seek compensation and hold companies accountable.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- INDIVIDUAL TORT FORMS -->
+<div id="form-section">
+  <!-- TAB NAV -->
+  <div class="tort-tab-nav">
+    <div class="tort-tab-inner">
+      <button class="tort-tab active" onclick="switchTort('talcum')" id="tab-talcum"><span class="tab-dot"></span>Talcum Powder</button>
+      <button class="tort-tab" onclick="switchTort('roundup')" id="tab-roundup"><span class="tab-dot"></span>Roundup</button>
+      <button class="tort-tab" onclick="switchTort('paraquat')" id="tab-paraquat"><span class="tab-dot"></span>Paraquat</button>
+      <button class="tort-tab" onclick="switchTort('depo')" id="tab-depo"><span class="tab-dot"></span>Depo-Provera</button>
+      <button class="tort-tab" onclick="switchTort('hairrelaxer')" id="tab-hairrelaxer"><span class="tab-dot"></span>Hair Relaxer</button>
+      <button class="tort-tab" onclick="switchTort('cgm')" id="tab-cgm"><span class="tab-dot"></span>CGM Device</button>
+    </div>
+  </div>
+
+  <!-- ══════════ TALCUM POWDER ══════════ -->
+  <div class="tort-panel active" id="panel-talcum">
+    <div class="tort-panel-inner">
+      <div class="tort-panel-info">
+        <span class="section-tag">🧴 Consumer Product · Active Lawsuit</span>
+        <h2>Talcum Powder<br><em>Ovarian Cancer Claim</em></h2>
+        <p>Talcum powder products like Johnson & Johnson's Baby Powder have been linked to ovarian cancer and mesothelioma due to asbestos contamination. Thousands of women are currently pursuing compensation.</p>
+        <p><strong style="color:var(--cream)">You may qualify if:</strong></p>
+        <ul class="qualify-list">
+          <li><div class="q-check">✓</div>You or a loved one used talcum-based body/baby powder regularly</li>
+          <li><div class="q-check">✓</div>You received a diagnosis of ovarian cancer, fallopian tube cancer, peritoneal cancer, or mesothelioma</li>
+          <li><div class="q-check">✓</div>Diagnosis occurred after a period of sustained talcum powder use</li>
+          <li><div class="q-check">✓</div>You do not yet have legal representation for this claim</li>
+        </ul>
+        <div class="tort-awards">
+          <h4>Notable Verdicts & Settlements</h4>
+          <div class="award-row"><span>2024 – J&J Global Settlement</span><span class="award-amt">$6.5 Billion</span></div>
+          <div class="award-row"><span>2018 – Missouri Jury Award</span><span class="award-amt">$4.7 Billion</span></div>
+          <div class="award-row"><span>2016 – St. Louis Verdict</span><span class="award-amt">$72 Million</span></div>
+        </div>
+      </div>
+      <div class="form-card" id="card-talcum">
+        <div class="form-head"><h3>Talcum Powder Eligibility Application</h3><p>Complete all fields accurately to evaluate your potential claim.</p></div>
+        <form id="form-talcum" novalidate>
+          <div class="step-header"><div class="step-num">01</div><div class="step-lbl">Contact Information</div></div>
+          <div class="form-row">
+            <div class="form-group"><label>First Name <span>*</span></label><input type="text" class="form-control" name="firstName" placeholder="First name"><div class="field-error">Required.</div></div>
+            <div class="form-group"><label>Last Name <span>*</span></label><input type="text" class="form-control" name="lastName" placeholder="Last name"><div class="field-error">Required.</div></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label>Mobile Phone <span>*</span></label><input type="tel" class="form-control phone-input" name="phone" placeholder="(000) 000-0000"><div class="field-error">Valid phone required.</div></div>
+            <div class="form-group"><label>Email Address <span>*</span></label><input type="email" class="form-control" name="email" placeholder="name@email.com"><div class="field-error">Valid email required.</div></div>
+          </div>
+          <div class="form-group"><label>State of Residence <span>*</span></label><select class="form-control state-sel" name="state"><option value="">Select your state</option></select><div class="field-error">Please select your state.</div></div>
+          <div class="form-sep"></div>
+          <div class="step-header"><div class="step-num">02</div><div class="step-lbl">Medical & Exposure History</div></div>
+          <div class="form-group"><label>Primary Diagnosis <span>*</span></label>
+            <select class="form-control" name="diagnosis"><option value="">Choose diagnosis</option>
+              <option>Ovarian Cancer</option><option>Fallopian Tube Cancer</option><option>Peritoneal Cancer</option><option>Mesothelioma</option><option>Other Cancer</option>
+            </select><div class="field-error">Please select a diagnosis.</div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label>Year of Diagnosis <span>*</span></label><select class="form-control year-sel" name="diagYear"><option value="">Select year</option></select><div class="field-error">Required.</div></div>
+            <div class="form-group"><label>Duration of Talcum Use <span>*</span></label>
+              <select class="form-control" name="talcumUse"><option value="">Select period</option>
+                <option>Less than 1 year</option><option>1–5 years</option><option>5–10 years</option><option>More than 10 years</option><option>Unsure</option>
+              </select><div class="field-error">Required.</div>
+            </div>
+          </div>
+          <div class="form-group"><label>Product Used <span>*</span></label>
+            <select class="form-control" name="product"><option value="">Select product</option>
+              <option>Johnson & Johnson Baby Powder</option><option>Shower to Shower</option><option>Generic Talcum Powder</option><option>Multiple Products</option><option>Unsure of Brand</option>
+            </select><div class="field-error">Required.</div>
+          </div>
+          <div class="form-group"><label>Do you currently have legal representation for this claim?</label>
+            <select class="form-control" name="hasAttorney"><option value="">Select</option><option>No</option><option>Yes</option></select>
+          </div>
+          <div class="consent-block">
+            <label class="consent-check"><input type="checkbox" name="c1"><p>I have read and agree to the <a href="#">Terms & Conditions</a> and <a href="#">Privacy Policy</a>.</p></label>
+            <div class="field-error" id="c1-talcum">Required.</div>
+            <label class="consent-check"><input type="checkbox" name="c2"><p>I consent to receive SMS/calls from IntakeHive and its legal partners regarding my claim. Message & data rates apply. Reply STOP to cancel.</p></label>
+            <div class="field-error" id="c2-talcum">Required.</div>
+          </div>
+          <button type="submit" class="btn-submit"><span class="btn-text">Submit Eligibility Request</span><div class="spinner" style="display:none"></div></button>
+          <div class="secure-note">🔒 SSL Secured & Confidential Submission</div>
+        </form>
+        <div class="form-success"><div class="success-icon">✓</div><h3>Submission Received!</h3><p>Thank you. A representative will contact you within 24–48 hours.<br><br><strong style="color:var(--cream)">Your information is secure and confidential.</strong></p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ ROUNDUP ══════════ -->
+  <div class="tort-panel" id="panel-roundup">
+    <div class="tort-panel-inner">
+      <div class="tort-panel-info">
+        <span class="section-tag">🌿 Consumer / Agriculture · Active Lawsuit</span>
+        <h2>Roundup Weed Killer<br><em>Non-Hodgkin's Lymphoma Claim</em></h2>
+        <p>Roundup, made by Monsanto (now Bayer), contains glyphosate — declared a "probable human carcinogen" by the WHO. Over 177,000 lawsuits have been filed by people who developed cancer after using Roundup.</p>
+        <p><strong style="color:var(--cream)">You may qualify if:</strong></p>
+        <ul class="qualify-list">
+          <li><div class="q-check">✓</div>You or a loved one used or were regularly exposed to Roundup weed killer</li>
+          <li><div class="q-check">✓</div>You were diagnosed with Non-Hodgkin's Lymphoma, CLL, or another blood/lymph cancer</li>
+          <li><div class="q-check">✓</div>Diagnosis came after a period of Roundup use or occupational exposure</li>
+          <li><div class="q-check">✓</div>You do not yet have an attorney for this claim</li>
+        </ul>
+        <div class="tort-awards">
+          <h4>Notable Verdicts & Settlements</h4>
+          <div class="award-row"><span>2024 – Philadelphia Jury</span><span class="award-amt">$2.25 Billion</span></div>
+          <div class="award-row"><span>2024 – Pennsylvania Man</span><span class="award-amt">$78 Million</span></div>
+          <div class="award-row"><span>2020 – Global Settlement (~125K cases)</span><span class="award-amt">$11+ Billion</span></div>
+          <div class="award-row"><span>2018 – First Roundup Trial</span><span class="award-amt">$289 Million</span></div>
+        </div>
+      </div>
+      <div class="form-card" id="card-roundup">
+        <div class="form-head"><h3>Roundup Eligibility Application</h3><p>Complete all fields accurately to evaluate your potential claim.</p></div>
+        <form id="form-roundup" novalidate>
+          <div class="step-header"><div class="step-num">01</div><div class="step-lbl">Contact Information</div></div>
+          <div class="form-row">
+            <div class="form-group"><label>First Name <span>*</span></label><input type="text" class="form-control" name="firstName" placeholder="First name"><div class="field-error">Required.</div></div>
+            <div class="form-group"><label>Last Name <span>*</span></label><input type="text" class="form-control" name="lastName" placeholder="Last name"><div class="field-error">Required.</div></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label>Mobile Phone <span>*</span></label><input type="tel" class="form-control phone-input" name="phone" placeholder="(000) 000-0000"><div class="field-error">Valid phone required.</div></div>
+            <div class="form-group"><label>Email Address <span>*</span></label><input type="email" class="form-control" name="email" placeholder="name@email.com"><div class="field-error">Valid email required.</div></div>
+          </div>
+          <div class="form-group"><label>State of Residence <span>*</span></label><select class="form-control state-sel" name="state"><option value="">Select your state</option></select><div class="field-error">Required.</div></div>
+          <div class="form-sep"></div>
+          <div class="step-header"><div class="step-num">02</div><div class="step-lbl">Cancer & Exposure Details</div></div>
+          <div class="form-group"><label>Cancer Diagnosis <span>*</span></label>
+            <select class="form-control" name="diagnosis"><option value="">Select diagnosis</option>
+              <option>Non-Hodgkin's Lymphoma (NHL)</option><option>Diffuse Large B-Cell Lymphoma</option><option>Follicular Lymphoma</option><option>Chronic Lymphocytic Leukemia (CLL)</option><option>Small Lymphocytic Lymphoma (SLL)</option><option>Mantle Cell Lymphoma</option><option>Marginal Zone Lymphoma</option><option>Hairy Cell Leukemia</option><option>T-Cell Lymphoma</option><option>Other Blood / Lymph Cancer</option>
+            </select><div class="field-error">Required.</div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label>Year of Diagnosis <span>*</span></label><select class="form-control year-sel" name="diagYear"><option value="">Select year</option></select><div class="field-error">Required.</div></div>
+            <div class="form-group"><label>Primary Exposure Location <span>*</span></label>
+              <select class="form-control" name="exposureLocation"><option value="">Select</option>
+                <option>Home / Garden</option><option>Farm / Agriculture</option><option>Landscaping / Grounds Work</option><option>Forestry / Logging</option><option>Golf Course</option><option>Exposure Only (did not apply)</option><option>Both Work & Home</option>
+              </select><div class="field-error">Required.</div>
+            </div>
+          </div>
+          <div class="form-group"><label>Approximate Years of Roundup Use <span>*</span></label>
+            <select class="form-control" name="yearsUse"><option value="">Select</option>
+              <option>Less than 1 year</option><option>1–5 years</option><option>5–10 years</option><option>10–20 years</option><option>More than 20 years</option>
+            </select><div class="field-error">Required.</div>
+          </div>
+          <div class="form-group"><label>Do you currently have legal representation for this claim?</label>
+            <select class="form-control" name="hasAttorney"><option value="">Select</option><option>No</option><option>Yes</option></select>
+          </div>
+          <div class="consent-block">
+            <label class="consent-check"><input type="checkbox" name="c1"><p>I have read and agree to the <a href="#">Terms & Conditions</a> and <a href="#">Privacy Policy</a>.</p></label>
+            <div class="field-error" id="c1-roundup">Required.</div>
+            <label class="consent-check"><input type="checkbox" name="c2"><p>I consent to receive SMS/calls from IntakeHive and its legal partners regarding my claim. Message & data rates apply. Reply STOP to cancel.</p></label>
+            <div class="field-error" id="c2-roundup">Required.</div>
+          </div>
+          <button type="submit" class="btn-submit"><span class="btn-text">Submit Eligibility Request</span><div class="spinner" style="display:none"></div></button>
+          <div class="secure-note">🔒 SSL Secured & Confidential Submission</div>
+        </form>
+        <div class="form-success"><div class="success-icon">✓</div><h3>Submission Received!</h3><p>Thank you. A representative will contact you within 24–48 hours.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ PARAQUAT ══════════ -->
+  <div class="tort-panel" id="panel-paraquat">
+    <div class="tort-panel-inner">
+      <div class="tort-panel-info">
+        <span class="section-tag">☠️ Agricultural Chemical · Active Lawsuit</span>
+        <h2>Paraquat Herbicide<br><em>Parkinson's Disease Claim</em></h2>
+        <p>Paraquat dichloride is one of the most toxic herbicides used in the United States. Research has strongly linked even small amounts of paraquat exposure to the development of Parkinson's disease.</p>
+        <p><strong style="color:var(--cream)">You may qualify if:</strong></p>
+        <ul class="qualify-list">
+          <li><div class="q-check">✓</div>You or a loved one was exposed to paraquat — by mixing, loading, applying, or living near fields where it was used</li>
+          <li><div class="q-check">✓</div>You were diagnosed with Parkinson's disease or Parkinsonism</li>
+          <li><div class="q-check">✓</div>Exposure occurred before your diagnosis</li>
+          <li><div class="q-check">✓</div>You do not yet have an attorney for this claim</li>
+        </ul>
+        <div class="tort-awards">
+          <h4>Case Status</h4>
+          <div class="award-row"><span>Federal MDL Cases Pending</span><span class="award-amt">4,000+</span></div>
+          <div class="award-row"><span>Defendants</span><span class="award-amt">Syngenta / Chevron</span></div>
+          <div class="award-row"><span>Status</span><span class="award-amt" style="color:var(--gold)">Active Litigation</span></div>
+        </div>
+      </div>
+      <div class="form-card" id="card-paraquat">
+        <div class="form-head"><h3>Paraquat Eligibility Application</h3><p>Complete all fields accurately to evaluate your potential claim.</p></div>
+        <form id="form-paraquat" novalidate>
+          <div class="step-header"><div class="step-num">01</div><div class="step-lbl">Contact Information</div></div>
+          <div class="form-row">
+            <div class="form-group"><label>First Name <span>*</span></label><input type="text" class="form-control" name="firstName" placeholder="First name"><div class="field-error">Required.</div></div>
+            <div class="form-group"><label>Last Name <span>*</span></label><input type="text" class="form-control" name="lastName" placeholder="Last name"><div class="field-error">Required.</div></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label>Mobile Phone <span>*</span></label><input type="tel" class="form-control phone-input" name="phone" placeholder="(000) 000-0000"><div class="field-error">Required.</div></div>
+            <div class="form-group"><label>Email Address <span>*</span></label><input type="email" class="form-control" name="email" placeholder="name@email.com"><div class="field-error">Required.</div></div>
+          </div>
+          <div class="form-group"><label>State of Residence <span>*</span></label><select class="form-control state-sel" name="state"><option value="">Select your state</option></select><div class="field-error">Required.</div></div>
+          <div class="form-sep"></div>
+          <div class="step-header"><div class="step-num">02</div><div class="step-lbl">Diagnosis & Exposure Details</div></div>
+          <div class="form-group"><label>Diagnosis <span>*</span></label>
+            <select class="form-control" name="diagnosis"><option value="">Select diagnosis</option>
+              <option>Parkinson's Disease</option><option>Parkinsonism</option><option>Other Neurological Condition</option><option>Not Yet Diagnosed</option>
+            </select><div class="field-error">Required.</div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label>Year of Diagnosis <span>*</span></label><select class="form-control year-sel" name="diagYear"><option value="">Select year</option></select><div class="field-error">Required.</div></div>
+            <div class="form-group"><label>Nature of Exposure <span>*</span></label>
+              <select class="form-control" name="exposureType"><option value="">Select</option>
+                <option>Mixed / Loaded / Applied Paraquat</option><option>Lived Near Fields Where Used</option><option>Farm Worker / Laborer</option><option>Applicator / Sprayer</option><option>Other Occupational Exposure</option>
+              </select><div class="field-error">Required.</div>
+            </div>
+          </div>
+          <div class="form-group"><label>Years of Exposure <span>*</span></label>
+            <select class="form-control" name="yearsExposure"><option value="">Select</option>
+              <option>Less than 1 year</option><option>1–5 years</option><option>5–10 years</option><option>More than 10 years</option><option>Unsure</option>
+            </select><div class="field-error">Required.</div>
+          </div>
+          <div class="form-group"><label>Do you currently have legal representation for this claim?</label>
+            <select class="form-control" name="hasAttorney"><option value="">Select</option><option>No</option><option>Yes</option></select>
+          </div>
+          <div class="consent-block">
+            <label class="consent-check"><input type="checkbox" name="c1"><p>I have read and agree to the <a href="#">Terms & Conditions</a> and <a href="#">Privacy Policy</a>.</p></label>
+            <div class="field-error" id="c1-paraquat">Required.</div>
+            <label class="consent-check"><input type="checkbox" name="c2"><p>I consent to receive SMS/calls from IntakeHive and its legal partners regarding my claim. Message & data rates apply. Reply STOP to cancel.</p></label>
+            <div class="field-error" id="c2-paraquat">Required.</div>
+          </div>
+          <button type="submit" class="btn-submit"><span class="btn-text">Submit Eligibility Request</span><div class="spinner" style="display:none"></div></button>
+          <div class="secure-note">🔒 SSL Secured & Confidential Submission</div>
+        </form>
+        <div class="form-success"><div class="success-icon">✓</div><h3>Submission Received!</h3><p>Thank you. A representative will contact you within 24–48 hours.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ DEPO-PROVERA ══════════ -->
+  <div class="tort-panel" id="panel-depo">
+    <div class="tort-panel-inner">
+      <div class="tort-panel-info">
+        <span class="section-tag">💉 Drug / Medical Device · Active Lawsuit</span>
+        <h2>Depo-Provera<br><em>Brain Tumor (Meningioma) Claim</em></h2>
+        <p>Depo-Provera, a contraceptive injection manufactured by Pfizer, has been linked to meningioma (intracranial brain tumors), bone density loss, blood clots, and cancers. Thousands of women are now filing claims.</p>
+        <p><strong style="color:var(--cream)">You may qualify if:</strong></p>
+        <ul class="qualify-list">
+          <li><div class="q-check">✓</div>You used Depo-Provera (medroxyprogesterone acetate) birth control injections</li>
+          <li><div class="q-check">✓</div>You were diagnosed with a meningioma (brain tumor), intracranial tumor, or other serious condition</li>
+          <li><div class="q-check">✓</div>You used the injection for a year or more</li>
+          <li><div class="q-check">✓</div>You do not yet have an attorney for this claim</li>
+        </ul>
+        <div class="tort-awards">
+          <h4>Case Status</h4>
+          <div class="award-row"><span>Federal MDL (IL)</span><span class="award-amt">Active 2024–</span></div>
+          <div class="award-row"><span>Defendant</span><span class="award-amt">Pfizer Inc.</span></div>
+          <div class="award-row"><span>Linked Condition</span><span class="award-amt">Meningioma</span></div>
+        </div>
+      </div>
+      <div class="form-card" id="card-depo">
+        <div class="form-head"><h3>Depo-Provera Eligibility Application</h3><p>Complete all fields accurately to evaluate your potential claim.</p></div>
+        <form id="form-depo" novalidate>
+          <div class="step-header"><div class="step-num">01</div><div class="step-lbl">Contact Information</div></div>
+          <div class="form-row">
+            <div class="form-group"><label>First Name <span>*</span></label><input type="text" class="form-control" name="firstName" placeholder="First name"><div class="field-error">Required.</div></div>
+            <div class="form-group"><label>Last Name <span>*</span></label><input type="text" class="form-control" name="lastName" placeholder="Last name"><div class="field-error">Required.</div></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label>Mobile Phone <span>*</span></label><input type="tel" class="form-control phone-input" name="phone" placeholder="(000) 000-0000"><div class="field-error">Required.</div></div>
+            <div class="form-group"><label>Email Address <span>*</span></label><input type="email" class="form-control" name="email" placeholder="name@email.com"><div class="field-error">Required.</div></div>
+          </div>
+          <div class="form-group"><label>State of Residence <span>*</span></label><select class="form-control state-sel" name="state"><option value="">Select your state</option></select><div class="field-error">Required.</div></div>
+          <div class="form-sep"></div>
+          <div class="step-header"><div class="step-num">02</div><div class="step-lbl">Medical & Usage History</div></div>
+          <div class="form-group"><label>Diagnosis <span>*</span></label>
+            <select class="form-control" name="diagnosis"><option value="">Select diagnosis</option>
+              <option>Meningioma (Brain Tumor)</option><option>Intracranial Tumor</option><option>Blood Clot / Thrombosis</option><option>Bone Density Loss / Osteoporosis</option><option>Breast Cancer</option><option>Cervical Cancer</option><option>Other Serious Condition</option>
+            </select><div class="field-error">Required.</div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label>Year of Diagnosis <span>*</span></label><select class="form-control year-sel" name="diagYear"><option value="">Select year</option></select><div class="field-error">Required.</div></div>
+            <div class="form-group"><label>Duration of Depo-Provera Use <span>*</span></label>
+              <select class="form-control" name="useLength"><option value="">Select</option>
+                <option>Less than 1 year</option><option>1–2 years</option><option>2–5 years</option><option>5–10 years</option><option>More than 10 years</option>
+              </select><div class="field-error">Required.</div>
+            </div>
+          </div>
+          <div class="form-group"><label>Approximate Period of Use <span>*</span></label>
+            <select class="form-control" name="usePeriod"><option value="">Select</option>
+              <option>Before 2000</option><option>2000–2010</option><option>2010–2020</option><option>After 2020</option><option>Multiple Periods</option>
+            </select><div class="field-error">Required.</div>
+          </div>
+          <div class="form-group"><label>Do you currently have legal representation for this claim?</label>
+            <select class="form-control" name="hasAttorney"><option value="">Select</option><option>No</option><option>Yes</option></select>
+          </div>
+          <div class="consent-block">
+            <label class="consent-check"><input type="checkbox" name="c1"><p>I have read and agree to the <a href="#">Terms & Conditions</a> and <a href="#">Privacy Policy</a>.</p></label>
+            <div class="field-error" id="c1-depo">Required.</div>
+            <label class="consent-check"><input type="checkbox" name="c2"><p>I consent to receive SMS/calls from IntakeHive and its legal partners regarding my claim. Message & data rates apply. Reply STOP to cancel.</p></label>
+            <div class="field-error" id="c2-depo">Required.</div>
+          </div>
+          <button type="submit" class="btn-submit"><span class="btn-text">Submit Eligibility Request</span><div class="spinner" style="display:none"></div></button>
+          <div class="secure-note">🔒 SSL Secured & Confidential Submission</div>
+        </form>
+        <div class="form-success"><div class="success-icon">✓</div><h3>Submission Received!</h3><p>Thank you. A representative will contact you within 24–48 hours.</p></div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ══════════ HAIR RELAXER ══════════ -->
+  <div class="tort-panel" id="panel-hairrelaxer">
+    <div class="tort-panel-inner">
+      <div class="tort-panel-info">
+        <span class="section-tag">💆‍♀️ Personal Care Product · Active Lawsuit</span>
+        <h2>Hair Relaxer<br><em>Uterine & Ovarian Cancer Claim</em></h2>
+        <p>Chemical hair relaxers — including products by L'Oréal, Dark & Lovely, Motions, and others — have been linked to uterine cancer, ovarian cancer, and endometrial cancer. A major NIH study found that women who used hair relaxers frequently had a significantly higher risk of developing uterine cancer.</p>
+        <p><strong style="color:var(--cream)">You may qualify if:</strong></p>
+        <ul class="qualify-list">
+          <li><div class="q-check">✓</div>You or a loved one used chemical hair relaxers, texturizers, or hair-straightening products regularly</li>
+          <li><div class="q-check">✓</div>You were diagnosed with uterine cancer, ovarian cancer, endometrial cancer, or uterine fibroids</li>
+          <li><div class="q-check">✓</div>You used these products for a year or more prior to diagnosis</li>
+          <li><div class="q-check">✓</div>You do not yet have legal representation for this claim</li>
+        </ul>
+        <div class="tort-awards">
+          <h4>Case Status & Settlements</h4>
+          <div class="award-row"><span>2023 – Federal MDL Established</span><span class="award-amt">Active</span></div>
+          <div class="award-row"><span>Cases Filed Nationwide</span><span class="award-amt">8,000+</span></div>
+          <div class="award-row"><span>Key Defendants</span><span class="award-amt">L'Oréal, Revlon & Others</span></div>
+          <div class="award-row"><span>NIH Study Risk Increase</span><span class="award-amt">~2× Higher Risk</span></div>
+        </div>
+      </div>
+      <div class="form-card" id="card-hairrelaxer">
+        <div class="form-head"><h3>Hair Relaxer Eligibility Application</h3><p>Complete all fields accurately to evaluate your potential claim.</p></div>
+        <form id="form-hairrelaxer" novalidate>
+          <div class="step-header"><div class="step-num">01</div><div class="step-lbl">Contact Information</div></div>
+          <div class="form-row">
+            <div class="form-group"><label>First Name <span>*</span></label><input type="text" class="form-control" name="firstName" placeholder="First name"><div class="field-error">Required.</div></div>
+            <div class="form-group"><label>Last Name <span>*</span></label><input type="text" class="form-control" name="lastName" placeholder="Last name"><div class="field-error">Required.</div></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label>Mobile Phone <span>*</span></label><input type="tel" class="form-control phone-input" name="phone" placeholder="(000) 000-0000"><div class="field-error">Valid phone required.</div></div>
+            <div class="form-group"><label>Email Address <span>*</span></label><input type="email" class="form-control" name="email" placeholder="name@email.com"><div class="field-error">Valid email required.</div></div>
+          </div>
+          <div class="form-group"><label>State of Residence <span>*</span></label><select class="form-control state-sel" name="state"><option value="">Select your state</option></select><div class="field-error">Please select your state.</div></div>
+          <div class="form-sep"></div>
+          <div class="step-header"><div class="step-num">02</div><div class="step-lbl">Medical & Product History</div></div>
+          <div class="form-group"><label>Primary Diagnosis <span>*</span></label>
+            <select class="form-control" name="diagnosis"><option value="">Choose diagnosis</option>
+              <option>Uterine Cancer</option><option>Endometrial Cancer</option><option>Ovarian Cancer</option><option>Uterine Fibroids (Requiring Surgery)</option><option>Fallopian Tube Cancer</option><option>Other Gynecological Cancer</option>
+            </select><div class="field-error">Please select a diagnosis.</div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label>Year of Diagnosis <span>*</span></label><select class="form-control year-sel" name="diagYear"><option value="">Select year</option></select><div class="field-error">Required.</div></div>
+            <div class="form-group"><label>Duration of Hair Relaxer Use <span>*</span></label>
+              <select class="form-control" name="usedYears"><option value="">Select period</option>
+                <option>Less than 1 year</option><option>1–5 years</option><option>5–10 years</option><option>More than 10 years</option><option>Unsure</option>
+              </select><div class="field-error">Required.</div>
+            </div>
+          </div>
+          <div class="form-group"><label>Frequency of Use <span>*</span></label>
+            <select class="form-control" name="useFrequency"><option value="">Select</option>
+              <option>Every 6–8 weeks (Regular)</option><option>Every 2–3 months</option><option>Less than 4 times per year</option><option>Unsure / Varied</option>
+            </select><div class="field-error">Required.</div>
+          </div>
+          <div class="form-group"><label>Products Used (select all that apply)</label>
+            <select class="form-control" name="product"><option value="">Select primary product</option>
+              <option>L'Oréal (any line)</option><option>Dark & Lovely</option><option>Motions</option><option>Soft Sheen Carson</option><option>TCB Naturals</option><option>Optimum Care</option><option>Multiple Brands</option><option>Unsure of Brand</option>
+            </select>
+          </div>
+          <div class="form-group"><label>Do you currently have legal representation for this claim?</label>
+            <select class="form-control" name="hasAttorney"><option value="">Select</option><option>No</option><option>Yes</option></select>
+          </div>
+          <div class="consent-block">
+            <label class="consent-check"><input type="checkbox" name="c1"><p>I have read and agree to the <a href="#">Terms & Conditions</a> and <a href="#">Privacy Policy</a>.</p></label>
+            <div class="field-error" id="c1-hairrelaxer">Required.</div>
+            <label class="consent-check"><input type="checkbox" name="c2"><p>I consent to receive SMS/calls from IntakeHive and its legal partners regarding my claim. Message & data rates apply. Reply STOP to cancel.</p></label>
+            <div class="field-error" id="c2-hairrelaxer">Required.</div>
+          </div>
+          <button type="submit" class="btn-submit"><span class="btn-text">Submit Eligibility Request</span><div class="spinner" style="display:none"></div></button>
+          <div class="secure-note">🔒 SSL Secured & Confidential Submission</div>
+        </form>
+        <div class="form-success"><div class="success-icon">✓</div><h3>Submission Received!</h3><p>Thank you. A representative will contact you within 24–48 hours.<br><br><strong style="color:var(--cream)">Your information is secure and confidential.</strong></p></div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ══════════ CGM ══════════ -->
+  <div class="tort-panel" id="panel-cgm">
+    <div class="tort-panel-inner">
+      <div class="tort-panel-info">
+        <span class="section-tag">📟 Medical Device · Active Lawsuit</span>
+        <h2>Continuous Glucose Monitor<br><em>Device Failure / Injury Claim</em></h2>
+        <p>Certain CGM devices have been linked to dangerously inaccurate blood glucose readings, causing patients to take incorrect insulin doses — resulting in hypoglycemia, hyperglycemia, coma, or death.</p>
+        <p><strong style="color:var(--cream)">You may qualify if:</strong></p>
+        <ul class="qualify-list">
+          <li><div class="q-check">✓</div>You or a loved one used a CGM device (Dexcom, Abbott FreeStyle, Medtronic Guardian, or similar)</li>
+          <li><div class="q-check">✓</div>You experienced a serious injury, hospitalization, coma, or death linked to an inaccurate reading</li>
+          <li><div class="q-check">✓</div>The injury occurred within the last several years</li>
+          <li><div class="q-check">✓</div>You do not yet have legal representation for this claim</li>
+        </ul>
+        <div class="tort-awards">
+          <h4>Case Status</h4>
+          <div class="award-row"><span>Device Category</span><span class="award-amt">Class III Medical Device</span></div>
+          <div class="award-row"><span>Common Defendants</span><span class="award-amt">Dexcom / Abbott / Medtronic</span></div>
+          <div class="award-row"><span>Status</span><span class="award-amt" style="color:var(--gold)">Emerging Litigation</span></div>
+        </div>
+      </div>
+      <div class="form-card" id="card-cgm">
+        <div class="form-head"><h3>CGM Device Eligibility Application</h3><p>Complete all fields accurately to evaluate your potential claim.</p></div>
+        <form id="form-cgm" novalidate>
+          <div class="step-header"><div class="step-num">01</div><div class="step-lbl">Contact Information</div></div>
+          <div class="form-row">
+            <div class="form-group"><label>First Name <span>*</span></label><input type="text" class="form-control" name="firstName" placeholder="First name"><div class="field-error">Required.</div></div>
+            <div class="form-group"><label>Last Name <span>*</span></label><input type="text" class="form-control" name="lastName" placeholder="Last name"><div class="field-error">Required.</div></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label>Mobile Phone <span>*</span></label><input type="tel" class="form-control phone-input" name="phone" placeholder="(000) 000-0000"><div class="field-error">Required.</div></div>
+            <div class="form-group"><label>Email Address <span>*</span></label><input type="email" class="form-control" name="email" placeholder="name@email.com"><div class="field-error">Required.</div></div>
+          </div>
+          <div class="form-group"><label>State of Residence <span>*</span></label><select class="form-control state-sel" name="state"><option value="">Select your state</option></select><div class="field-error">Required.</div></div>
+          <div class="form-sep"></div>
+          <div class="step-header"><div class="step-num">02</div><div class="step-lbl">Injury & Device Details</div></div>
+          <div class="form-group"><label>CGM Device Brand <span>*</span></label>
+            <select class="form-control" name="deviceBrand"><option value="">Select device</option>
+              <option>Dexcom G6</option><option>Dexcom G7</option><option>Abbott FreeStyle Libre</option><option>Medtronic Guardian</option><option>Eversense</option><option>Other / Unsure</option>
+            </select><div class="field-error">Required.</div>
+          </div>
+          <div class="form-group"><label>Injury / Outcome <span>*</span></label>
+            <select class="form-control" name="injury"><option value="">Select outcome</option>
+              <option>Severe Hypoglycemia (Low Blood Sugar)</option><option>Severe Hyperglycemia (High Blood Sugar)</option><option>Diabetic Ketoacidosis (DKA)</option><option>Seizure or Loss of Consciousness</option><option>Hospitalization</option><option>Coma</option><option>Death of a Loved One</option><option>Other Serious Injury</option>
+            </select><div class="field-error">Required.</div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label>Year of Injury <span>*</span></label><select class="form-control year-sel" name="injuryYear"><option value="">Select year</option></select><div class="field-error">Required.</div></div>
+            <div class="form-group"><label>Duration of Device Use <span>*</span></label>
+              <select class="form-control" name="deviceUse"><option value="">Select</option>
+                <option>Less than 6 months</option><option>6–12 months</option><option>1–2 years</option><option>More than 2 years</option>
+              </select><div class="field-error">Required.</div>
+            </div>
+          </div>
+          <div class="form-group"><label>Do you currently have legal representation for this claim?</label>
+            <select class="form-control" name="hasAttorney"><option value="">Select</option><option>No</option><option>Yes</option></select>
+          </div>
+          <div class="consent-block">
+            <label class="consent-check"><input type="checkbox" name="c1"><p>I have read and agree to the <a href="#">Terms & Conditions</a> and <a href="#">Privacy Policy</a>.</p></label>
+            <div class="field-error" id="c1-cgm">Required.</div>
+            <label class="consent-check"><input type="checkbox" name="c2"><p>I consent to receive SMS/calls from Legal Injury Advocates and its legal partners regarding my claim. Message & data rates apply. Reply STOP to cancel.</p></label>
+            <div class="field-error" id="c2-cgm">Required.</div>
+          </div>
+          <button type="submit" class="btn-submit"><span class="btn-text">Submit Eligibility Request</span><div class="spinner" style="display:none"></div></button>
+          <div class="secure-note">🔒 SSL Secured & Confidential Submission</div>
+        </form>
+        <div class="form-success"><div class="success-icon">✓</div><h3>Submission Received!</h3><p>Thank you. A representative will contact you within 24–48 hours.</p></div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end #form-section -->
+
+<div class="divider"></div>
+
+<!-- WHY US -->
+<section class="why">
+  <div class="section-inner">
+    <span class="section-tag reveal">Why Choose Us</span>
+    <h2 class="section-title reveal">Why victims and families trust Legal Injury Advocates</h2>
+    <div class="why-grid">
+      <div class="why-card reveal">
+        <div class="why-icon">🆓</div>
+        <div class="why-title">Free Initial Claim Review</div>
+        <div class="why-desc">We'll review your claim for free — no upfront costs, no risk. You don't pay anything unless we win your case.</div>
+      </div>
+      <div class="why-card reveal">
+        <div class="why-icon">💬</div>
+        <div class="why-title">Clear, Honest Communication</div>
+        <div class="why-desc">We keep you informed every step of the way with straightforward, honest updates about your case status.</div>
+      </div>
+      <div class="why-card reveal">
+        <div class="why-icon">🗺️</div>
+        <div class="why-title">Legal Help Anywhere in the U.S.</div>
+        <div class="why-desc">Our team is ready to fight for you no matter where you live. We serve clients in all 50 states.</div>
+      </div>
+      <div class="why-card reveal">
+        <div class="why-icon">⚖️</div>
+        <div class="why-title">No Fee Unless You Win</div>
+        <div class="why-desc">You don't pay anything unless we win your case. No risk, no obligation — we only get paid when you do.</div>
+      </div>
+      <div class="why-card reveal">
+        <div class="why-icon">⚡</div>
+        <div class="why-title">Quick Initial Eligibility Check</div>
+        <div class="why-desc">Find out if you qualify in under 60 seconds. Our fast-track intake process gets your case reviewed immediately.</div>
+      </div>
+      <div class="why-card reveal">
+        <div class="why-icon">🏆</div>
+        <div class="why-title">Proven Results</div>
+        <div class="why-desc">Our experienced legal team and co-counsel have spent decades winning landmark cases and securing billions for clients.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- FAQ -->
+<section class="faq">
+  <div class="section-inner">
+    <span class="section-tag reveal">Common Questions</span>
+    <h2 class="section-title reveal">Frequently Asked Questions</h2>
+    <div class="faq-grid">
+      <div class="faq-item reveal" onclick="toggleFaq(this)">
+        <div class="faq-q">How do I know if I qualify for a mass tort claim?<span class="faq-icon">+</span></div>
+        <div class="faq-a">Qualification depends on the specific case type. Generally, you must have been exposed to the product or drug in question and have a documented medical diagnosis linked to that exposure. Fill out the eligibility form for your case type above — our team will review your details and contact you within 24–48 hours to discuss your options.</div>
+      </div>
+      <div class="faq-item reveal" onclick="toggleFaq(this)">
+        <div class="faq-q">How much does it cost to pursue a claim?<span class="faq-icon">+</span></div>
+        <div class="faq-a">Nothing upfront. We work on a contingency fee basis, which means you pay nothing unless and until you receive compensation. There is no risk to you for submitting a claim review or speaking with our team.</div>
+      </div>
+      <div class="faq-item reveal" onclick="toggleFaq(this)">
+        <div class="faq-q">How long do I have to file a claim?<span class="faq-icon">+</span></div>
+        <div class="faq-a">Each state has its own "statute of limitations" that limits how long you have to file a lawsuit after an injury. The window varies by case type and state — typically 2 to 4 years from the date of diagnosis or discovery of harm. Don't delay: contact us as soon as possible to preserve your rights.</div>
+      </div>
+      <div class="faq-item reveal" onclick="toggleFaq(this)">
+        <div class="faq-q">What is a mass tort lawsuit?<span class="faq-icon">+</span></div>
+        <div class="faq-a">A mass tort involves many individuals harmed by the same product, drug, or action by a company. Unlike a class action, each plaintiff maintains an individual case and potential compensation amount. Mass torts allow injured individuals to take on large corporations more effectively by sharing legal resources and evidence.</div>
+      </div>
+      <div class="faq-item reveal" onclick="toggleFaq(this)">
+        <div class="faq-q">How long does a mass tort claim take?<span class="faq-icon">+</span></div>
+        <div class="faq-a">Timelines vary significantly. Some cases settle within 1–2 years; others, particularly those in active federal MDL proceedings, may take 3–5 years or longer. Your attorney will keep you updated throughout the process. Many cases settle before going to trial, which can speed up resolution.</div>
+      </div>
+      <div class="faq-item reveal" onclick="toggleFaq(this)">
+        <div class="faq-q">What compensation might I receive?<span class="faq-icon">+</span></div>
+        <div class="faq-a">Potential compensation varies widely by case type, severity of injury, and other factors. You may be entitled to medical expenses (past and future), lost wages and lost earning capacity, pain and suffering, and in some cases, punitive damages against the negligent company. Notable verdicts in our active campaigns have ranged from tens of millions to billions of dollars.</div>
+      </div>
+      <div class="faq-item reveal" onclick="toggleFaq(this)">
+        <div class="faq-q">What if I already have an attorney?<span class="faq-icon">+</span></div>
+        <div class="faq-a">If you already have legal representation for your specific claim, we generally cannot take on your case. However, if you have not yet retained an attorney for your particular mass tort claim, we encourage you to reach out to explore your options. There is no obligation in doing so.</div>
+      </div>
+      <div class="faq-item reveal" onclick="toggleFaq(this)">
+        <div class="faq-q">Is my information kept confidential?<span class="faq-icon">+</span></div>
+        <div class="faq-a">Yes. All information you submit is protected by attorney-client privilege and our strict privacy policy. Your personal and medical information is never sold or shared with unauthorized third parties. All submissions are SSL encrypted for your protection.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand">
+          <div class="nav-logo">LIA</div>
+          <span>Legal Injury Advocates</span>
+        </div>
+        <p class="footer-tagline">Advocating for the injured to get justice, help others in need, and hold companies accountable.</p>
+      </div>
+      <div class="footer-links">
+        <h4>Active Lawsuits</h4>
+        <ul>
+          <li><a href="#form-section" onclick="switchTort('talcum')">Talcum Powder Lawsuit</a></li>
+          <li><a href="#form-section" onclick="switchTort('roundup')">Roundup Lawsuit</a></li>
+          <li><a href="#form-section" onclick="switchTort('paraquat')">Paraquat Lawsuit</a></li>
+          <li><a href="#form-section" onclick="switchTort('depo')">Depo-Provera Lawsuit</a></li>
+          <li><a href="#form-section" onclick="switchTort('hairrelaxer')">Hair Relaxer Lawsuit</a></li>
+          <li><a href="#form-section" onclick="switchTort('cgm')">CGM Device Lawsuit</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms & Conditions</a></li>
+          <li><a href="tel:+18664849403">(866) 484-9403</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-disclaimer">
+      <strong>Attorney Advertising.</strong> Legal Injury Advocates is a trade name of Saddle Rock Legal Group LLC. No representation is made that the quality of the legal services to be performed is greater than the quality of legal services performed by other lawyers. The choice of a lawyer is an important decision and should not be based on advertisements alone. FREE BACKGROUND INFORMATION AVAILABLE UPON REQUEST. Some cases may be referred to co-counsel. Contingent attorneys' fees refer only to those fees charged by attorneys for their legal services. Such fees are not permitted in all types of cases. Clients may be responsible for court costs and case expenses. <strong>Consult your physician before making any decision about prescribed medication or medical treatment. Do not stop taking a prescribed medication without first consulting with your doctor.</strong> This information does not create any attorney-client relationship. An attorney-client relationship is formed only by express written mutual agreement through a retainer contract. Legal Services do not include those involving Arkansas, California, Connecticut, Florida, Illinois, Kentucky, Louisiana or Rhode Island.
+    </div>
+    <div class="footer-copy">
+      <span>© 2026 Legal Injury Advocates. All Rights Reserved.</span>
+      <span>Powered by IntakeHive</span>
+    </div>
+  </div>
+</footer>
+
+<div id="toast"></div>
+
+<script>
+// ── CONFIG — set your API URL after deploying the backend ──────────
+const API_URL = 'https://intakehive-production.up.railway.app'; // ← your deployed backend URL
+
+const STATES = ['Alabama','Alaska','Arizona','Arkansas','California','Colorado','Connecticut','Delaware','Florida','Georgia','Hawaii','Idaho','Illinois','Indiana','Iowa','Kansas','Kentucky','Louisiana','Maine','Maryland','Massachusetts','Michigan','Minnesota','Mississippi','Missouri','Montana','Nebraska','Nevada','New Hampshire','New Jersey','New Mexico','New York','North Carolina','North Dakota','Ohio','Oklahoma','Oregon','Pennsylvania','Rhode Island','South Carolina','South Dakota','Tennessee','Texas','Utah','Vermont','Virginia','Washington','West Virginia','Wisconsin','Wyoming'];
+
+const TORTS = ['talcum','roundup','paraquat','depo','hairrelaxer','cgm'];
+
+// Populate state selects
+document.querySelectorAll('.state-sel').forEach(sel=>{
+  STATES.forEach(s=>{ const o=document.createElement('option'); o.value=s; o.textContent=s; sel.appendChild(o); });
+});
+
+// Populate year selects
+document.querySelectorAll('.year-sel').forEach(sel=>{
+  for(let y=new Date().getFullYear(); y>=1950; y--){
+    const o=document.createElement('option'); o.value=y; o.textContent=y; sel.appendChild(o);
+  }
+});
+
+// Tab switching
+function switchTort(id){
+  TORTS.forEach(t=>{
+    document.getElementById('panel-'+t).classList.toggle('active', t===id);
+    document.getElementById('tab-'+t).classList.toggle('active', t===id);
+  });
+}
+
+// FAQ toggle
+function toggleFaq(el){ el.classList.toggle('open'); }
+
+// Phone formatting
+document.querySelectorAll('.phone-input').forEach(inp=>{
+  inp.addEventListener('input',function(){
+    let v=this.value.replace(/\D/g,'');
+    if(v.length<=3) v=v;
+    else if(v.length<=6) v='('+v.slice(0,3)+') '+v.slice(3);
+    else v='('+v.slice(0,3)+') '+v.slice(3,6)+'-'+v.slice(6,10);
+    this.value=v;
+  });
+});
+
+// Toast notifications
+function showToast(msg,type='success'){
+  const t=document.getElementById('toast');
+  t.textContent=msg;
+  t.className='show toast-'+type;
+  setTimeout(()=>{ t.className=''; },4000);
+}
+
+// Validate required fields
+function validateForm(form){
+  let ok=true;
+  form.querySelectorAll('input[type="text"],input[type="tel"],input[type="email"]').forEach(el=>{
+    const err=el.nextElementSibling;
+    if(!el.value.trim()){
+      el.classList.add('error');
+      if(err&&err.classList.contains('field-error')) err.style.display='block';
+      ok=false;
+    } else {
+      el.classList.remove('error');
+      if(err&&err.classList.contains('field-error')) err.style.display='none';
+    }
+  });
+  form.querySelectorAll('select.state-sel, select[name="diagnosis"], select[name="diagYear"], select[name="injuryYear"]').forEach(el=>{
+    const err=el.nextElementSibling;
+    if(!el.value){
+      el.classList.add('error');
+      if(err&&err.classList.contains('field-error')) err.style.display='block';
+      ok=false;
+    } else {
+      el.classList.remove('error');
+      if(err&&err.classList.contains('field-error')) err.style.display='none';
+    }
+  });
+  const email=form.querySelector('input[type="email"]');
+  if(email&&email.value&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)){
+    email.classList.add('error');
+    const err=email.nextElementSibling;
+    if(err&&err.classList.contains('field-error')){ err.textContent='Valid email required.'; err.style.display='block'; }
+    ok=false;
+  }
+  const phone=form.querySelector('.phone-input');
+  if(phone&&phone.value.replace(/\D/g,'').length<10){
+    phone.classList.add('error');
+    const err=phone.nextElementSibling;
+    if(err&&err.classList.contains('field-error')) err.style.display='block';
+    ok=false;
+  }
+  form.querySelectorAll('.consent-check input[type="checkbox"]').forEach(cb=>{
+    const errId=cb.closest('label').nextElementSibling;
+    if(!cb.checked){
+      if(errId&&errId.classList.contains('field-error')) errId.style.display='block';
+      ok=false;
+    } else {
+      if(errId&&errId.classList.contains('field-error')) errId.style.display='none';
+    }
+  });
+  return ok;
+}
+
+// Gather form data as plain object
+function gatherData(form, tortName){
+  const data = { tort: tortName };
+  form.querySelectorAll('input:not([type="checkbox"]), select').forEach(el=>{
+    if(el.name) data[el.name] = el.value;
+  });
+  return data;
+}
+
+// Submit lead to backend API → Supabase (PostgreSQL)
+function uid(){ return Date.now().toString(36)+Math.random().toString(36).slice(2,7); }
+
+const LS_KEY = 'ih_leads';
+function lsGetLeads(){ try{ return JSON.parse(localStorage.getItem(LS_KEY)||'[]'); }catch(e){ return []; } }
+function lsSaveLead(entry){ const a=lsGetLeads(); a.unshift(entry); try{ localStorage.setItem(LS_KEY,JSON.stringify(a)); }catch(e){} }
+
+async function submitToAPI(data){
+  // Always save locally first — nothing is ever lost
+  const entry = { ...data, id: uid(), created_at: new Date().toISOString(), source: 'local' };
+  lsSaveLead(entry);
+  // Also try to sync to backend (failure is silent)
+  if(API_URL){
+    try{
+      const res = await fetch(`${API_URL}/api/leads`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+      const json = await res.json().catch(()=>({}));
+      if(res.ok){
+        const a=lsGetLeads(); const idx=a.findIndex(l=>l.id===entry.id);
+        if(idx>-1){ a[idx].source='synced'; a[idx].server_id=json.id||null; }
+        try{ localStorage.setItem(LS_KEY,JSON.stringify(a)); }catch(e){}
+        return json;
+      }
+      console.warn('API error:', (json.errors||[]).join(', ')||json.error||'');
+    } catch(e){ console.warn('Backend unreachable, saved locally:', e.message); }
+  }
+  return { success: true, id: entry.id };
+}
+
+// Handle form submissions
+TORTS.forEach(tortId=>{
+  const form = document.getElementById('form-'+tortId);
+  if(!form) return;
+  const card = document.getElementById('card-'+tortId);
+
+  form.addEventListener('submit', async function(e){
+    e.preventDefault();
+    if(!validateForm(form)) return showToast('Please complete all required fields.','error');
+
+    const btn     = form.querySelector('.btn-submit');
+    const btnText = btn.querySelector('.btn-text');
+    const spinner = btn.querySelector('.spinner');
+    btn.disabled = true; btnText.style.display='none'; spinner.style.display='block';
+
+    try {
+      const data = gatherData(form, tortId);
+      await submitToAPI(data);
+      form.style.display = 'none';
+      card.querySelector('.form-success').style.display = 'block';
+      showToast("✓ Submission received! We'll contact you shortly.", 'success');
+    } catch(err) {
+      showToast('Something went wrong — please try again.', 'error');
+      btn.disabled = false; btnText.style.display=''; spinner.style.display='none';
+    }
+  });
+});
+
+// Scroll reveal
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
+},{threshold:0.12});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+</script>
+
+</body>
+</html>
